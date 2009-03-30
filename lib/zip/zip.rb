@@ -360,6 +360,7 @@ module Zip
       @localHeaderOffset = 0
       @internalFileAttributes = 1
       @externalFileAttributes = 0
+      @versionNeededToExtract = 20
       @version = 52 # this library's version
       @ftype = nil # unspecified or unknown
       @filepath = nil
@@ -544,7 +545,7 @@ module Zip
       
       io << 
 	[LOCAL_ENTRY_SIGNATURE    ,
-	0                  ,
+	@versionNeededToExtract   ,
 	0                         , # @gp_flags                  ,
 	@compression_method        ,
 	@time.to_binary_dos_time     , # @lastModTime              ,
@@ -693,7 +694,7 @@ module Zip
 	[CENTRAL_DIRECTORY_ENTRY_SIGNATURE,
         @version                          , # version of encoding software
 	@fstype                           , # filesystem type
-	0                                 , # @versionNeededToExtract           ,
+	@versionNeededToExtract           , # @versionNeededToExtract           ,
 	0                                 , # @gp_flags                          ,
 	@compression_method                ,
         @time.to_binary_dos_time             , # @lastModTime                      ,
